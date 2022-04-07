@@ -53,11 +53,11 @@
 	},
 	"sources": {
 		"Documents/GitHub/evmProject/contracts/Insure.sol": {
-			"keccak256": "0x8d0d4edd80e05ca904be48eeac1a23cfb1b204ca8d27c6a3935bce9a217475e2",
+			"keccak256": "0xa1ca4ea7ef8a7b18051a59ab516ba94c6ed66b2e048fdd5f5a9013af9aba09b2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bef33bb33e90bd1fd3456931ce2f8551a6da526fa93dd992181fcce27d48fc20",
-				"dweb:/ipfs/Qmdk5Vv8BzGAiCMVNP6k6mSzMPBPoreoZxbzz6nQJsikFC"
+				"bzz-raw://3e54dcf0361b7f48dd9a7c6de9140ddcd46ae576f09b78f52bea8ad2bbb95545",
+				"dweb:/ipfs/QmdhwVsxgTM1Vm2DLJ4hUkkMdXJMcVH6qrnMRpBhoVft5n"
 			]
 		},
 		"Documents/GitHub/evmProject/contracts/library/PRBMath.sol": {

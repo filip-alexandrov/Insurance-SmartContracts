@@ -38,8 +38,8 @@
       ]
     },
     "C:\\Users\\User\\Documents\\GitHub\\evmProject\\contracts\\Insure.sol": {
-      "lastModificationDate": 1649334395013,
-      "contentHash": "a7c7a8256f53808b244301f3464aea2d",
+      "lastModificationDate": 1649353746587,
+      "contentHash": "d9fa12721c627311d0ffa6f2e886f4fa",
       "sourceName": "contracts/Insure.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -79,8 +79,8 @@
       ]
     },
     "C:\\Users\\User\\Documents\\GitHub\\evmProject\\contracts\\CustomOracle.sol": {
-      "lastModificationDate": 1649336335420,
-      "contentHash": "79e49b3d5a4122ae014b1805b6c0f9ef",
+      "lastModificationDate": 1649347990294,
+      "contentHash": "1aebab8e1ef4f0bcb2e04a0cc99103bc",
       "sourceName": "contracts/CustomOracle.sol",
       "solcConfig": {
         "version": "0.8.4",

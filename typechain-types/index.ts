@@ -18,10 +18,8 @@ export type { IERC20Metadata } from "./@openzeppelin/contracts/token/ERC20/exten
 export { IERC20Metadata__factory } from "./factories/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata__factory";
 export type { IERC20 } from "./@openzeppelin/contracts/token/ERC20/IERC20";
 export { IERC20__factory } from "./factories/@openzeppelin/contracts/token/ERC20/IERC20__factory";
-export type { CustomOracle } from "./contracts/CustomOracle.sol/CustomOracle";
-export { CustomOracle__factory } from "./factories/contracts/CustomOracle.sol/CustomOracle__factory";
-export type { Oracle } from "./contracts/CustomOracle.sol/Oracle";
-export { Oracle__factory } from "./factories/contracts/CustomOracle.sol/Oracle__factory";
+export type { CustomOracle } from "./contracts/CustomOracle";
+export { CustomOracle__factory } from "./factories/contracts/CustomOracle__factory";
 export type { DAI } from "./contracts/DAI";
 export { DAI__factory } from "./factories/contracts/DAI__factory";
 export type { Insure } from "./contracts/Insure.sol/Insure";
