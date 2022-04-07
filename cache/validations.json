@@ -1,0 +1,995 @@
+{
+  "version": "3.2",
+  "log": [
+    {
+      "CustomOracle": {
+        "src": "contracts\\CustomOracle.sol:7",
+        "version": {
+          "withMetadata": "ac791beb6bbbf677910fa5e0ee7674e7272cba06116072afe89d10cfa56cf1fe",
+          "withoutMetadata": "4df4489ddf4750e7404dd10d38961bfa45b66c912414b00ea79c32dfafe5212d",
+          "linkedWithoutMetadata": "4df4489ddf4750e7404dd10d38961bfa45b66c912414b00ea79c32dfafe5212d"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "(uint256[])",
+          "setExpiryPrice(uint256,uint256)",
+          "getExpiryPriceLevel(uint256)",
+          "makeCorrection(uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "CustomOracle",
+            "src": "contracts\\CustomOracle.sol:11"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "CustomOracle",
+              "src": "contracts\\CustomOracle.sol:8"
+            },
+            {
+              "label": "expiryDatePrice",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_uint256,t_uint256)",
+              "contract": "CustomOracle",
+              "src": "contracts\\CustomOracle.sol:9"
+            },
+            {
+              "label": "expiryAvailable",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_mapping(t_uint256,t_bool)",
+              "contract": "CustomOracle",
+              "src": "contracts\\CustomOracle.sol:10"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_uint256,t_bool)": {
+              "label": "mapping(uint256 => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "PRBMath": {
+        "src": "contracts\\library\\PRBMath.sol:97",
+        "version": {
+          "withMetadata": "022c9bc5ea3b3a6193a51a5db8657b5d6deb630bf05899f6a319d4611136317c",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "PRBMathUD60x18": {
+        "src": "contracts\\library\\PRBMathUD60x18.sol:12",
+        "version": {
+          "withMetadata": "86cf94700227a4d91e50eb3936beed2aee87da83ad3e7d00f78b863840d6667e",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [
+          "PRBMath"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "console": {
+        "src": "hardhat\\console.sol:4",
+        "version": {
+          "withMetadata": "beae05454d6c24b0af2926d3f12cbd62c3db4a4f7dff423bd7ff2ddbe2972f20",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      }
+    },
+    {
+      "Oracle": {
+        "src": "contracts\\CustomOracle.sol:7",
+        "version": {
+          "withMetadata": "c8a8460de64e5022667d785d7e98a8374c4189b15884435e0bce29dd65de4350",
+          "withoutMetadata": "4df4489ddf4750e7404dd10d38961bfa45b66c912414b00ea79c32dfafe5212d",
+          "linkedWithoutMetadata": "4df4489ddf4750e7404dd10d38961bfa45b66c912414b00ea79c32dfafe5212d"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "(uint256[])",
+          "setExpiryPrice(uint256,uint256)",
+          "getExpiryPriceLevel(uint256)",
+          "makeCorrection(uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Oracle",
+            "src": "contracts\\CustomOracle.sol:11"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Oracle",
+              "src": "contracts\\CustomOracle.sol:8"
+            },
+            {
+              "label": "expiryDatePrice",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_uint256,t_uint256)",
+              "contract": "Oracle",
+              "src": "contracts\\CustomOracle.sol:9"
+            },
+            {
+              "label": "expiryAvailable",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_mapping(t_uint256,t_bool)",
+              "contract": "Oracle",
+              "src": "contracts\\CustomOracle.sol:10"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_uint256,t_bool)": {
+              "label": "mapping(uint256 => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "PRBMath": {
+        "src": "contracts\\library\\PRBMath.sol:97",
+        "version": {
+          "withMetadata": "022c9bc5ea3b3a6193a51a5db8657b5d6deb630bf05899f6a319d4611136317c",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "PRBMathUD60x18": {
+        "src": "contracts\\library\\PRBMathUD60x18.sol:12",
+        "version": {
+          "withMetadata": "86cf94700227a4d91e50eb3936beed2aee87da83ad3e7d00f78b863840d6667e",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [
+          "PRBMath"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "console": {
+        "src": "hardhat\\console.sol:4",
+        "version": {
+          "withMetadata": "beae05454d6c24b0af2926d3f12cbd62c3db4a4f7dff423bd7ff2ddbe2972f20",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      }
+    },
+    {
+      "AggregatorV3Interface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\AggregatorV3Interface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "decimals()",
+          "description()",
+          "version()",
+          "getRoundData(uint80)",
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Ownable": {
+        "src": "@openzeppelin\\contracts\\access\\Ownable.sol:20",
+        "inherit": [
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Ownable",
+            "src": "@openzeppelin\\contracts\\access\\Ownable.sol:28"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Ownable",
+              "src": "@openzeppelin\\contracts\\access\\Ownable.sol:21"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "ERC20": {
+        "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:35",
+        "version": {
+          "withMetadata": "08295699790c674c5574539ced5280dbb163cab91795b07eb9175feafd7c5c02",
+          "withoutMetadata": "7e7a4d2dea64835b308c8a359c3029d74988a4318ba8ef4240ab30513edfd448",
+          "linkedWithoutMetadata": "7e7a4d2dea64835b308c8a359c3029d74988a4318ba8ef4240ab30513edfd448"
+        },
+        "inherit": [
+          "IERC20Metadata",
+          "IERC20",
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "(string,string)",
+          "name()",
+          "symbol()",
+          "decimals()",
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "increaseAllowance(address,uint256)",
+          "decreaseAllowance(address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "ERC20",
+            "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:54"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_balances",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:36"
+            },
+            {
+              "label": "_allowances",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:38"
+            },
+            {
+              "label": "_totalSupply",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:40"
+            },
+            {
+              "label": "_name",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:42"
+            },
+            {
+              "label": "_symbol",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:43"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "IERC20": {
+        "src": "contracts\\Insure.sol:24",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "IERC20Metadata": {
+        "src": "@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol:13",
+        "inherit": [
+          "IERC20"
+        ],
+        "libraries": [],
+        "methods": [
+          "name()",
+          "symbol()",
+          "decimals()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Context": {
+        "src": "@openzeppelin\\contracts\\utils\\Context.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Oracle": {
+        "src": "contracts\\CustomOracle.sol:7",
+        "version": {
+          "withMetadata": "88d30bc01cbfd5c044e2f1468d43e3638a2864b5046c458710a49a730416aa72",
+          "withoutMetadata": "c147899c5cd3ea873d86f8ec56fba47d0ceb872d2a1acf433e73b78eec18a76a",
+          "linkedWithoutMetadata": "c147899c5cd3ea873d86f8ec56fba47d0ceb872d2a1acf433e73b78eec18a76a"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "(uint256[])",
+          "setExpiryPrice(uint256,uint256)",
+          "getExpiryPriceLevel(uint256)",
+          "makeCorrection(uint256,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Oracle",
+            "src": "contracts\\CustomOracle.sol:11"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Oracle",
+              "src": "contracts\\CustomOracle.sol:8"
+            },
+            {
+              "label": "expiryDatePrice",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_uint256,t_uint256)",
+              "contract": "Oracle",
+              "src": "contracts\\CustomOracle.sol:9"
+            },
+            {
+              "label": "expiryAvailable",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_mapping(t_uint256,t_bool)",
+              "contract": "Oracle",
+              "src": "contracts\\CustomOracle.sol:10"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_uint256,t_bool)": {
+              "label": "mapping(uint256 => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "DAI": {
+        "src": "contracts\\DAI.sol:7",
+        "version": {
+          "withMetadata": "0699da068b41a504ceb64bc23ebd9b6d5dd092075444925bf77048c167c71295",
+          "withoutMetadata": "1ad8cc0f5fecfb6aa65ba5fcdc877428171f19bd484c989668aef6b331de82aa",
+          "linkedWithoutMetadata": "1ad8cc0f5fecfb6aa65ba5fcdc877428171f19bd484c989668aef6b331de82aa"
+        },
+        "inherit": [
+          "Ownable",
+          "ERC20",
+          "IERC20Metadata",
+          "IERC20",
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "()",
+          "mint(address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "DAI",
+            "src": "contracts\\DAI.sol:8"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_balances",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:36"
+            },
+            {
+              "label": "_allowances",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:38"
+            },
+            {
+              "label": "_totalSupply",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:40"
+            },
+            {
+              "label": "_name",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:42"
+            },
+            {
+              "label": "_symbol",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:43"
+            },
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_address",
+              "contract": "Ownable",
+              "src": "@openzeppelin\\contracts\\access\\Ownable.sol:21"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "Insure": {
+        "src": "contracts\\Insure.sol:43",
+        "version": {
+          "withMetadata": "f677778c9fa0b74527d1aac92f2185bb35b08a48069a1425b9dbb63c6e460e81",
+          "withoutMetadata": "cd067ce03ec3cece15ea8f5cb6187c04186f80da0e6eb67b33ef300083718862",
+          "linkedWithoutMetadata": "cd067ce03ec3cece15ea8f5cb6187c04186f80da0e6eb67b33ef300083718862"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "(uint256[],address)",
+          "setOracle(address)",
+          "setProviderInfo(uint256,uint256,uint256,uint256)",
+          "deleteAllProviderPolicies(uint256)",
+          "deposit(uint256)",
+          "withdraw(uint256)",
+          "openPolicy(address,uint256,uint256,uint256)",
+          "checkPolicies(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Insure",
+            "src": "contracts\\Insure.sol:51"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:47"
+            },
+            {
+              "label": "usdAddress",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:48"
+            },
+            {
+              "label": "oracle",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:49"
+            },
+            {
+              "label": "expiryDates",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_mapping(t_uint256,t_bool)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:50"
+            },
+            {
+              "label": "balance",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:75"
+            },
+            {
+              "label": "activeTakersPolicies",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_address,t_array(t_struct(ActiveTakerData)1258_storage)dyn_storage)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:83"
+            },
+            {
+              "label": "activeProviderTakers",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:86"
+            },
+            {
+              "label": "providers",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(ProviderData)1276_storage))",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:92"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(ActiveTakerData)1258_storage)dyn_storage": {
+              "label": "struct Insure.ActiveTakerData[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+              "label": "mapping(address => address[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_array(t_struct(ActiveTakerData)1258_storage)dyn_storage)": {
+              "label": "mapping(address => struct Insure.ActiveTakerData[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_struct(ProviderData)1276_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct Insure.ProviderData))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_bool)": {
+              "label": "mapping(uint256 => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(ProviderData)1276_storage)": {
+              "label": "mapping(uint256 => struct Insure.ProviderData)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(ActiveTakerData)1258_storage": {
+              "label": "struct Insure.ActiveTakerData",
+              "members": [
+                {
+                  "label": "provider",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lots",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "level",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "expiry",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_struct(ProviderData)1276_storage": {
+              "label": "struct Insure.ProviderData",
+              "members": [
+                {
+                  "label": "lots",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "level",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "customOracle": {
+        "src": "contracts\\Insure.sol:39",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getExpiryPriceLevel(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "PriceConsumerV3": {
+        "src": "contracts\\Oracle.sol:7",
+        "version": {
+          "withMetadata": "79ea9ceb45c806428ce158756e5ae5a40ec6dc97e3a2d1bc4988125f9180a0e0",
+          "withoutMetadata": "ceb7d0617021e2ae216e1547d48765791e5c134a54fbb97a5b09e70094da1b27",
+          "linkedWithoutMetadata": "ceb7d0617021e2ae216e1547d48765791e5c134a54fbb97a5b09e70094da1b27"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()",
+          "getLatestPrice()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "PriceConsumerV3",
+            "src": "contracts\\Oracle.sol:16"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "priceFeed",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(AggregatorV3Interface)45",
+              "contract": "PriceConsumerV3",
+              "src": "contracts\\Oracle.sol:9"
+            }
+          ],
+          "types": {
+            "t_contract(AggregatorV3Interface)45": {
+              "label": "contract AggregatorV3Interface",
+              "numberOfBytes": "20"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "PRBMath": {
+        "src": "contracts\\library\\PRBMath.sol:97",
+        "version": {
+          "withMetadata": "022c9bc5ea3b3a6193a51a5db8657b5d6deb630bf05899f6a319d4611136317c",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "PRBMathUD60x18": {
+        "src": "contracts\\library\\PRBMathUD60x18.sol:12",
+        "version": {
+          "withMetadata": "86cf94700227a4d91e50eb3936beed2aee87da83ad3e7d00f78b863840d6667e",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [
+          "PRBMath"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "console": {
+        "src": "hardhat\\console.sol:4",
+        "version": {
+          "withMetadata": "beae05454d6c24b0af2926d3f12cbd62c3db4a4f7dff423bd7ff2ddbe2972f20",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      }
+    }
+  ]
+}
