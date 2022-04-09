@@ -20,9 +20,19 @@ Pseudocode:
 - if month is expired; check oracle; transfer 100 to winner of policy and delete fields in maps
 - if month is expire
 */
-    // TODO: make possible to provide at multiple prices and levels
+    // TODO: make possible to provide at multiple prices and levels of single expiry
     // TODO: Smart contract transaction bundler 
     // TODO: Ability to close policy before settlement (provider, taker)
+    // TODO: Provide with zero risk (open in both directions together)
+    // TODO: Add uptrend protection
+    // TODO: Allow takers to post quotes 
+    // TODO: Allow different stablecoins as deposit/withdraw
+    
+    // ROADMAP: Insure entire defi protocols (ex. fail/not fail in a year) vote?
+    // Insure a token, by provider adding contract address
+    // Multichain: Ethereum providers takeable on Solana, etc
+    
+
 
 
 interface IERC20 {
@@ -144,13 +154,13 @@ contract Insure{
 
         require(balance[_providerAddr] > _lots.mul(100 * 1e18),  "Provider has not enough funds.");
         require(balance[msg.sender] > _price.mul(_lots), "Taker has not enough funds.");
-
         require(expiryDates[_expiry] == true, "Expiry date is not valid."); 
 
         balance[_providerAddr] -= _lots.mul(100 * 1e18); 
-
         balance[msg.sender] -= providers[_providerAddr][_expiry].price.mul(_lots);
         balance[_providerAddr] += providers[_providerAddr][_expiry].price.mul(_lots); 
+
+        providers[_providerAddr][_expiry].lots -= _lots;
         
         activeTakersPolicies[msg.sender].push(ActiveTakerData({provider: _providerAddr, lots: _lots, level: _level, expiry: _expiry}));
         activeProviderTakers[_providerAddr].push(msg.sender); 
@@ -167,16 +177,18 @@ contract Insure{
         return; 
     }
 
-    function closePolicy(address _address, uint256 _index, uint256 _expiry) private {
+    function closePolicy(address _taker, uint256 _index, uint256 _expiry) private {
         uint256 closingLevel = customOracle(oracleAddress).getExpiryPriceLevel(_expiry);
 
-        if(activeTakersPolicies[_address][_index].level < closingLevel){
-            balance[_address] += activeTakersPolicies[_address][_index].lots.mul(100 * 1e18); 
-            delete activeTakersPolicies[_address][_index]; 
+        if(closingLevel < activeTakersPolicies[_taker][_index].level){
+            // Taker Wins
+            balance[_taker] += activeTakersPolicies[_taker][_index].lots.mul(100 * 1e18); 
+            delete activeTakersPolicies[_taker][_index]; 
         } else {
-            address prov = activeTakersPolicies[_address][_index].provider;
-            balance[prov] += activeTakersPolicies[_address][_index].lots.mul(100 * 1e18);
-            delete activeTakersPolicies[_address][_index]; 
+            // Provider Wins
+            address prov = activeTakersPolicies[_taker][_index].provider;
+            balance[prov] += activeTakersPolicies[_taker][_index].lots.mul(100 * 1e18);
+            delete activeTakersPolicies[_taker][_index]; 
         }
         return;
     }
