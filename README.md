@@ -19,19 +19,19 @@ Technical Features:
 
 ### TODO's for this Contract Template:
 
-[ ] Make possible to provide at multiple prices and levels within single expiration
-[ ] Smart contract transaction bundler (multiple interactions at the same time to save gas)
-[ ] Ability to close policy before settlement (for provider, taker)
-[ ] Provide with zero risk (open in both directions together)
-[ ] Add uptrend protection (this contract is only for downtrend protection)
-[ ] Allow takers to post quotes
-[ ] Allow different stablecoins as deposit/withdraw
-[ ] Allow oracle data verification period (people can raise issue to be hand-validated)
+- [ ] Make possible to provide at multiple prices and levels within single expiration
+- [ ] Smart contract transaction bundler (multiple interactions at the same time to save gas)
+- [ ] Ability to close policy before settlement (for provider, taker)
+- [ ] Provide with zero risk (open in both directions together)
+- [ ] Add uptrend protection (this contract is only for downtrend protection)
+- [ ] Allow takers to post quotes
+- [ ] Allow different stablecoins as deposit/withdraw
+- [ ] Allow oracle data verification period (people can raise issue to be hand-validated)
 
 ### Roadmap for the project
 
 - Insure entire defi protocols (ex. fail/not fail in a year; confirmed with vote?)
-- Insure a token, by provider adding contract address
+- Insure a token, by provider adding the contract address
 - Multichain: Ethereum providers can be accessed on Solana, etc
 
 # Advanced Sample Hardhat Project
