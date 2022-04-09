@@ -27,6 +27,7 @@ Pseudocode:
     // TODO: Add uptrend protection
     // TODO: Allow takers to post quotes 
     // TODO: Allow different stablecoins as deposit/withdraw
+    // TODO: Allow oracle data verification period (people can raise issue to be hand validated)  
     
     // ROADMAP: Insure entire defi protocols (ex. fail/not fail in a year) vote?
     // Insure a token, by provider adding contract address

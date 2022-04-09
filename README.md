@@ -1,3 +1,39 @@
+# Insurance Smart Contract for EVM-Compatible Blockchains
+
+Key Features:
+
+- Premiums range $0.01 - $1000 (one-time payment)
+- Settlement is always $100
+- Expiry is predefined (weekly or yearly)
+- Everyone can be insurance provider or taker
+- Insured asset can be binary or continously priced (stocks, )
+
+Technical Features:
+
+- Front-running is prevented by specifying premium when calling the contract
+- Historical prices are updated to a custom oracle contract
+- Calling the contract with taker's address settles all his expired positions
+- One Ticker per Insurance + Oracle Contract pair (with multiple expiration dates)
+- One Lot is a single policy
+- Up to 1000 lots (=$10000 max settlement value) can be provided at single Insurance Level (2 digit precision) and Expiration combination
+
+### TODO's for this Contract Template:
+
+[ ] Make possible to provide at multiple prices and levels within single expiration
+[ ] Smart contract transaction bundler (multiple interactions at the same time to save gas)
+[ ] Ability to close policy before settlement (for provider, taker)
+[ ] Provide with zero risk (open in both directions together)
+[ ] Add uptrend protection (this contract is only for downtrend protection)
+[ ] Allow takers to post quotes
+[ ] Allow different stablecoins as deposit/withdraw
+[ ] Allow oracle data verification period (people can raise issue to be hand-validated)
+
+### Roadmap for the project
+
+- Insure entire defi protocols (ex. fail/not fail in a year; confirmed with vote?)
+- Insure a token, by provider adding contract address
+- Multichain: Ethereum providers can be accessed on Solana, etc
+
 # Advanced Sample Hardhat Project
 
 This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
