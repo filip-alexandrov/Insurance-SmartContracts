@@ -22,6 +22,17 @@
 				"type": "constructor"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "prod1",
+						"type": "uint256"
+					}
+				],
+				"name": "PRBMath__MulDivFixedPointOverflow",
+				"type": "error"
+			},
+			{
 				"anonymous": false,
 				"inputs": [
 					{
@@ -212,12 +223,12 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "uint256[]",
 						"name": "_expiry",
-						"type": "uint256"
+						"type": "uint256[]"
 					}
 				],
-				"name": "deleteAllProviderPolicies",
+				"name": "deleteProviderPolicies",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -258,6 +269,66 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "_addr",
+						"type": "address"
+					}
+				],
+				"name": "getActiveProviderTakers",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_addr",
+						"type": "address"
+					}
+				],
+				"name": "getActiveTakersPolicies",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "provider",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "lots",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "level",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "expiry",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Insure.ActiveTakerData[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "_providerAddr",
 						"type": "address"
 					},
@@ -275,6 +346,11 @@
 						"internalType": "uint256",
 						"name": "_level",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
 					}
 				],
 				"name": "openPolicy",
@@ -284,7 +360,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "oracle",
+				"name": "oracleAddress",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -346,7 +422,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_oracle",
+						"name": "_oracleAddress",
 						"type": "address"
 					}
 				],
@@ -416,6 +492,13 @@
 			"version": 1
 		},
 		"userdoc": {
+			"errors": {
+				"PRBMath__MulDivFixedPointOverflow(uint256)": [
+					{
+						"notice": "Emitted when the result overflows uint256."
+					}
+				]
+			},
 			"kind": "user",
 			"methods": {},
 			"version": 1
@@ -438,11 +521,11 @@
 	},
 	"sources": {
 		"Documents/GitHub/evmProject/contracts/Insure.sol": {
-			"keccak256": "0xa1ca4ea7ef8a7b18051a59ab516ba94c6ed66b2e048fdd5f5a9013af9aba09b2",
+			"keccak256": "0x765e3a43bbf51303c1bd14a0b39794e265dbd9fc5c2e545fce507772ccdf2e04",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3e54dcf0361b7f48dd9a7c6de9140ddcd46ae576f09b78f52bea8ad2bbb95545",
-				"dweb:/ipfs/QmdhwVsxgTM1Vm2DLJ4hUkkMdXJMcVH6qrnMRpBhoVft5n"
+				"bzz-raw://c42cfa5d2b1c345e2490cf59fd2362af649b1e7708c457f3a89aae665f440f3e",
+				"dweb:/ipfs/QmZQ126eK7YoxHKAjkWjJ5K5AyHYCJzi68wH4hM5wKUbpt"
 			]
 		},
 		"Documents/GitHub/evmProject/contracts/library/PRBMath.sol": {

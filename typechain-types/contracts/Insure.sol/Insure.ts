@@ -26,17 +26,40 @@ import type {
   OnEvent,
 } from "../../common";
 
+export declare namespace Insure {
+  export type ActiveTakerDataStruct = {
+    provider: string;
+    lots: BigNumberish;
+    level: BigNumberish;
+    expiry: BigNumberish;
+  };
+
+  export type ActiveTakerDataStructOutput = [
+    string,
+    BigNumber,
+    BigNumber,
+    BigNumber
+  ] & {
+    provider: string;
+    lots: BigNumber;
+    level: BigNumber;
+    expiry: BigNumber;
+  };
+}
+
 export interface InsureInterface extends utils.Interface {
   functions: {
     "activeProviderTakers(address,uint256)": FunctionFragment;
     "activeTakersPolicies(address,uint256)": FunctionFragment;
     "balance(address)": FunctionFragment;
     "checkPolicies(address)": FunctionFragment;
-    "deleteAllProviderPolicies(uint256)": FunctionFragment;
+    "deleteProviderPolicies(uint256[])": FunctionFragment;
     "deposit(uint256)": FunctionFragment;
     "expiryDates(uint256)": FunctionFragment;
-    "openPolicy(address,uint256,uint256,uint256)": FunctionFragment;
-    "oracle()": FunctionFragment;
+    "getActiveProviderTakers(address)": FunctionFragment;
+    "getActiveTakersPolicies(address)": FunctionFragment;
+    "openPolicy(address,uint256,uint256,uint256,uint256)": FunctionFragment;
+    "oracleAddress()": FunctionFragment;
     "owner()": FunctionFragment;
     "providers(address,uint256)": FunctionFragment;
     "setOracle(address)": FunctionFragment;
@@ -51,11 +74,13 @@ export interface InsureInterface extends utils.Interface {
       | "activeTakersPolicies"
       | "balance"
       | "checkPolicies"
-      | "deleteAllProviderPolicies"
+      | "deleteProviderPolicies"
       | "deposit"
       | "expiryDates"
+      | "getActiveProviderTakers"
+      | "getActiveTakersPolicies"
       | "openPolicy"
-      | "oracle"
+      | "oracleAddress"
       | "owner"
       | "providers"
       | "setOracle"
@@ -78,8 +103,8 @@ export interface InsureInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "deleteAllProviderPolicies",
-    values: [BigNumberish]
+    functionFragment: "deleteProviderPolicies",
+    values: [BigNumberish[]]
   ): string;
   encodeFunctionData(
     functionFragment: "deposit",
@@ -90,10 +115,21 @@ export interface InsureInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "openPolicy",
-    values: [string, BigNumberish, BigNumberish, BigNumberish]
+    functionFragment: "getActiveProviderTakers",
+    values: [string]
   ): string;
-  encodeFunctionData(functionFragment: "oracle", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getActiveTakersPolicies",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "openPolicy",
+    values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "oracleAddress",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "providers",
@@ -127,7 +163,7 @@ export interface InsureInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "deleteAllProviderPolicies",
+    functionFragment: "deleteProviderPolicies",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
@@ -135,8 +171,19 @@ export interface InsureInterface extends utils.Interface {
     functionFragment: "expiryDates",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getActiveProviderTakers",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getActiveTakersPolicies",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "openPolicy", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "oracle", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "oracleAddress",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "providers", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setOracle", data: BytesLike): Result;
@@ -251,8 +298,8 @@ export interface Insure extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    deleteAllProviderPolicies(
-      _expiry: BigNumberish,
+    deleteProviderPolicies(
+      _expiry: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -266,15 +313,26 @@ export interface Insure extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    getActiveProviderTakers(
+      _addr: string,
+      overrides?: CallOverrides
+    ): Promise<[string[]]>;
+
+    getActiveTakersPolicies(
+      _addr: string,
+      overrides?: CallOverrides
+    ): Promise<[Insure.ActiveTakerDataStructOutput[]]>;
+
     openPolicy(
       _providerAddr: string,
       _expiry: BigNumberish,
       _lots: BigNumberish,
       _level: BigNumberish,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    oracle(overrides?: CallOverrides): Promise<[string]>;
+    oracleAddress(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -291,7 +349,7 @@ export interface Insure extends BaseContract {
     >;
 
     setOracle(
-      _oracle: string,
+      _oracleAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -337,8 +395,8 @@ export interface Insure extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  deleteAllProviderPolicies(
-    _expiry: BigNumberish,
+  deleteProviderPolicies(
+    _expiry: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -349,15 +407,26 @@ export interface Insure extends BaseContract {
 
   expiryDates(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
+  getActiveProviderTakers(
+    _addr: string,
+    overrides?: CallOverrides
+  ): Promise<string[]>;
+
+  getActiveTakersPolicies(
+    _addr: string,
+    overrides?: CallOverrides
+  ): Promise<Insure.ActiveTakerDataStructOutput[]>;
+
   openPolicy(
     _providerAddr: string,
     _expiry: BigNumberish,
     _lots: BigNumberish,
     _level: BigNumberish,
+    _price: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  oracle(overrides?: CallOverrides): Promise<string>;
+  oracleAddress(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -374,7 +443,7 @@ export interface Insure extends BaseContract {
   >;
 
   setOracle(
-    _oracle: string,
+    _oracleAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -417,8 +486,8 @@ export interface Insure extends BaseContract {
 
     checkPolicies(_address: string, overrides?: CallOverrides): Promise<void>;
 
-    deleteAllProviderPolicies(
-      _expiry: BigNumberish,
+    deleteProviderPolicies(
+      _expiry: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -429,15 +498,26 @@ export interface Insure extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    getActiveProviderTakers(
+      _addr: string,
+      overrides?: CallOverrides
+    ): Promise<string[]>;
+
+    getActiveTakersPolicies(
+      _addr: string,
+      overrides?: CallOverrides
+    ): Promise<Insure.ActiveTakerDataStructOutput[]>;
+
     openPolicy(
       _providerAddr: string,
       _expiry: BigNumberish,
       _lots: BigNumberish,
       _level: BigNumberish,
+      _price: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    oracle(overrides?: CallOverrides): Promise<string>;
+    oracleAddress(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -453,7 +533,7 @@ export interface Insure extends BaseContract {
       }
     >;
 
-    setOracle(_oracle: string, overrides?: CallOverrides): Promise<void>;
+    setOracle(_oracleAddress: string, overrides?: CallOverrides): Promise<void>;
 
     setProviderInfo(
       _expiry: BigNumberish,
@@ -529,8 +609,8 @@ export interface Insure extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    deleteAllProviderPolicies(
-      _expiry: BigNumberish,
+    deleteProviderPolicies(
+      _expiry: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -544,15 +624,26 @@ export interface Insure extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getActiveProviderTakers(
+      _addr: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getActiveTakersPolicies(
+      _addr: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     openPolicy(
       _providerAddr: string,
       _expiry: BigNumberish,
       _lots: BigNumberish,
       _level: BigNumberish,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    oracle(overrides?: CallOverrides): Promise<BigNumber>;
+    oracleAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -563,7 +654,7 @@ export interface Insure extends BaseContract {
     ): Promise<BigNumber>;
 
     setOracle(
-      _oracle: string,
+      _oracleAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -606,8 +697,8 @@ export interface Insure extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    deleteAllProviderPolicies(
-      _expiry: BigNumberish,
+    deleteProviderPolicies(
+      _expiry: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -621,15 +712,26 @@ export interface Insure extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getActiveProviderTakers(
+      _addr: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getActiveTakersPolicies(
+      _addr: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     openPolicy(
       _providerAddr: string,
       _expiry: BigNumberish,
       _lots: BigNumberish,
       _level: BigNumberish,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    oracleAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -640,7 +742,7 @@ export interface Insure extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setOracle(
-      _oracle: string,
+      _oracleAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

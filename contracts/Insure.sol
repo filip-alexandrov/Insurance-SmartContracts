@@ -20,6 +20,10 @@ Pseudocode:
 - if month is expired; check oracle; transfer 100 to winner of policy and delete fields in maps
 - if month is expire
 */
+    // TODO: make possible to provide at multiple prices and levels
+    // TODO: Smart contract transaction bundler 
+    // TODO: Ability to close policy before settlement (provider, taker)
+
 
 interface IERC20 {
     event Transfer(address indexed from, address indexed to, uint256 value);
@@ -48,7 +52,7 @@ contract Insure{
 
     address public owner; 
     address public usdAddress; 
-    address public oracle; 
+    address public oracleAddress; 
     mapping(uint256 => bool) public expiryDates; 
     constructor(uint256[] memory _expiryDates,  address _usdAddress){
         owner = msg.sender; 
@@ -63,8 +67,8 @@ contract Insure{
         require(msg.sender == owner, "Only owner can do this");
         _;
     }
-    function setOracle(address _oracle) public onlyOwner{
-        oracle = _oracle; 
+    function setOracle(address _oracleAddress) public onlyOwner{
+        oracleAddress = _oracleAddress; 
     }
 
     mapping(address => uint256) public balance; 
@@ -94,8 +98,17 @@ contract Insure{
     }
     mapping(address => ActiveTakerData[]) public activeTakersPolicies;
 
+    function getActiveTakersPolicies(address _addr) public view returns(ActiveTakerData []memory){
+        return activeTakersPolicies[_addr]; 
+    }
+
+
     // Provider Data
     mapping(address => address[]) public activeProviderTakers; 
+    function getActiveProviderTakers(address _addr) public view returns(address []memory){
+        return activeProviderTakers[_addr]; 
+    }
+
     struct ProviderData{ 
         uint256 lots; 
         uint256 level;
@@ -107,50 +120,63 @@ contract Insure{
     function setProviderInfo(uint256 _expiry, uint256 _lots, uint256 _level, uint256 _price) public {
         require(balance[msg.sender] > 100* 10**18, "Balance too low"); // change to ethers units 
         require(expiryDates[_expiry] == true, "No such expiry available"); 
-        require(_expiry < block.timestamp);
+        require(_expiry > block.timestamp, "Expiry in the past.");
         require(_lots < 1000 && _price > 1e16 && _price < 1e21, "Price and Lot Data not compatible"); 
 
         providers[msg.sender][_expiry] = ProviderData({lots: _lots * 10**18, level: _level, price: _price});
     }
-    function deleteAllProviderPolicies(uint256 _expiry) public{
-        delete providers[msg.sender][_expiry];
+
+    function deleteProviderPolicies(uint256[] calldata _expiry) public{
+        for(uint80 i = 0; i< _expiry.length; i++){
+
+        delete providers[msg.sender][_expiry[i]];
+        }
+        return; 
     }
 
-    function openPolicy(address _providerAddr, uint256 _expiry, uint256 _lots, uint256 _level) public {
+    function openPolicy(address _providerAddr, uint256 _expiry, uint256 _lots, uint256 _level, uint256 _price) public {
+        _lots = _lots * 1e18;
         require(_providerAddr != msg.sender, "Provider and taker must be different");
         require(providers[_providerAddr][_expiry].lots != 0, "Provider has no such offer.");
         require(providers[_providerAddr][_expiry].lots >= _lots, "Not enough lots");
         require(providers[_providerAddr][_expiry].level == _level, "Wrong insurance level");
+        require(providers[_providerAddr][_expiry].price == _price, "Wrong cost of insurance");
 
-        require(balance[_providerAddr] > _lots * 100, "Provider has not enough funds.");
-        require(balance[msg.sender] > providers[_providerAddr][_expiry].price * _lots, "Takes has not enough funds.");
+        require(balance[_providerAddr] > _lots.mul(100 * 1e18),  "Provider has not enough funds.");
+        require(balance[msg.sender] > _price.mul(_lots), "Taker has not enough funds.");
 
         require(expiryDates[_expiry] == true, "Expiry date is not valid."); 
 
-        balance[_providerAddr] -= _lots*_level; 
-        balance[msg.sender] -= _lots*providers[_providerAddr][_expiry].price;
-        balance[_providerAddr] += providers[_providerAddr][_expiry].price * _lots; 
+        balance[_providerAddr] -= _lots.mul(100 * 1e18); 
+
+        balance[msg.sender] -= providers[_providerAddr][_expiry].price.mul(_lots);
+        balance[_providerAddr] += providers[_providerAddr][_expiry].price.mul(_lots); 
         
-        activeProviderTakers[_providerAddr].push(_providerAddr);
         activeTakersPolicies[msg.sender].push(ActiveTakerData({provider: _providerAddr, lots: _lots, level: _level, expiry: _expiry}));
+        activeProviderTakers[_providerAddr].push(msg.sender); 
+        return; 
     }
 
     function checkPolicies(address _address) public{
+        require(activeTakersPolicies[_address].length != 0, "No such taker address");
         for(uint256 i =0; i<activeTakersPolicies[_address].length; i++ ){
-            if(activeTakersPolicies[_address][i].expiry < block.timestamp){
-                closePolicy(_address, i);
+            if(activeTakersPolicies[_address][i].expiry < block.timestamp && activeTakersPolicies[_address][i].expiry > 0){
+                closePolicy(_address, i, activeTakersPolicies[_address][i].expiry);
             }
         }
+        return; 
     }
 
-    function closePolicy(address _address, uint256 _index) private {
-        // require oracle
-        uint256 closingLevel = 108;
+    function closePolicy(address _address, uint256 _index, uint256 _expiry) private {
+        uint256 closingLevel = customOracle(oracleAddress).getExpiryPriceLevel(_expiry);
+
         if(activeTakersPolicies[_address][_index].level < closingLevel){
-            balance[_address] += activeTakersPolicies[_address][_index].lots * 100; 
+            balance[_address] += activeTakersPolicies[_address][_index].lots.mul(100 * 1e18); 
+            delete activeTakersPolicies[_address][_index]; 
         } else {
             address prov = activeTakersPolicies[_address][_index].provider;
-            balance[prov] += activeTakersPolicies[_address][_index].lots * 100; 
+            balance[prov] += activeTakersPolicies[_address][_index].lots.mul(100 * 1e18);
+            delete activeTakersPolicies[_address][_index]; 
         }
         return;
     }
