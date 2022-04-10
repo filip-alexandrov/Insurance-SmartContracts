@@ -38,8 +38,8 @@
       ]
     },
     "C:\\Users\\User\\Documents\\GitHub\\evmProject\\contracts\\Insure.sol": {
-      "lastModificationDate": 1649583413136,
-      "contentHash": "14411d3933c1fb034e75e6844568cf97",
+      "lastModificationDate": 1649598247767,
+      "contentHash": "88422cc8635a50fa9969ea3d936ef12d",
       "sourceName": "contracts/Insure.sol",
       "solcConfig": {
         "version": "0.8.4",

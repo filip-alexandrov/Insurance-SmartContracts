@@ -56,15 +56,34 @@ interface customOracle{
 }
 
 contract Insure{
-    // Allow DAI transfers from DAI contract
-
     using PRBMathUD60x18 for uint256;
-
 
     address public owner; 
     address public usdAddress; 
     address public oracleAddress; 
+
     mapping(uint256 => bool) public expiryDates; 
+    mapping(address => address[]) public activeProviderTakers;
+
+    struct ActiveTakerData{
+        address provider; 
+        uint256 lots; 
+        uint256 level; 
+        uint256 expiry; 
+    }
+    // activeTakersPolicies[takerAddr] = [...]
+    mapping(address => ActiveTakerData[]) public activeTakersPolicies;
+
+    struct ProviderData{ 
+        uint256 lots; 
+        uint256 level;
+        uint256 price; 
+    }
+    // providers[providerAddr][expiry] = ProviderData
+    mapping(address => mapping(uint256 => ProviderData)) public providers; 
+
+
+
     constructor(uint256[] memory _expiryDates,  address _usdAddress){
         owner = msg.sender; 
         for(uint256 i=0; i<_expiryDates.length; i++){
@@ -73,7 +92,7 @@ contract Insure{
         usdAddress = _usdAddress;
     }
 
-    // Modifiers
+    // Utilities
     modifier onlyOwner(){
         require(msg.sender == owner, "Only owner can do this");
         _;
@@ -83,51 +102,37 @@ contract Insure{
     }
 
     mapping(address => uint256) public balance; 
+
     function deposit(uint256 _amount) public {
         IERC20(usdAddress).transferFrom(msg.sender, address(this), _amount); 
         balance[msg.sender] += _amount;
+        emit Deposit(msg.sender, _amount); 
     }
     function withdraw(uint256 _amount) public{
         require(balance[msg.sender] >= _amount, "Withdraw amount exceeds balance."); 
         balance[msg.sender] -= _amount;
         IERC20(usdAddress).transfer(msg.sender, _amount); 
+        emit Withdraw(msg.sender, _amount); 
     }
 
     // Events
-    event PositionOpened(address indexed taker, address indexed provider, uint256 expiry, uint256 lots, uint256 price);
-    event PositionClosed(address indexed taker, address indexed provider, uint256 expiry, uint256 lots, uint256 price, bool policyPaid);
+    event PolicyOpened(address indexed taker, address indexed provider, uint256 expiry, uint256 lots, uint256 level);
+    event PolicyClosed(address indexed taker, address indexed provider, uint256 expiry, uint256 lots, uint256 level, bool settlementPaid);
 
-    event NewPolicyAvailability(address indexed provider);
-
-
-    // Active policies (takers)
-    struct ActiveTakerData{
-        address provider; 
-        uint256 lots; 
-        uint256 level; 
-        uint256 expiry; 
-    }
-    mapping(address => ActiveTakerData[]) public activeTakersPolicies;
-
+    event NewPolicy(address indexed provider, uint256 expiry);
+    event Deposit(address indexed _address, uint256 _amount);
+    event Withdraw(address indexed _address, uint256 _amount);
+    
+    // Getters
     function getActiveTakersPolicies(address _addr) public view returns(ActiveTakerData []memory){
         return activeTakersPolicies[_addr]; 
     }
-
-
-    // Provider Data
-    mapping(address => address[]) public activeProviderTakers; 
+ 
     function getActiveProviderTakers(address _addr) public view returns(address []memory){
         return activeProviderTakers[_addr]; 
     }
 
-    struct ProviderData{ 
-        uint256 lots; 
-        uint256 level;
-        uint256 price; 
-    }
-    mapping(address => mapping(uint256 => ProviderData)) public providers; 
-
-    // Set provider info
+    // API's 
     function setProviderInfo(uint256 _expiry, uint256 _lots, uint256 _level, uint256 _price) public {
         require(balance[msg.sender] > 100* 10**18, "Balance too low"); // change to ethers units 
         require(expiryDates[_expiry] == true, "No such expiry available"); 
@@ -135,6 +140,8 @@ contract Insure{
         require(_lots < 1000 && _price > 1e16 && _price < 1e21, "Price and Lot Data not compatible"); 
 
         providers[msg.sender][_expiry] = ProviderData({lots: _lots * 10**18, level: _level, price: _price});
+        emit NewPolicy(msg.sender, _expiry); 
+        return; 
     }
 
     function deleteProviderPolicies(uint256[] calldata _expiry) public{
@@ -165,6 +172,8 @@ contract Insure{
         
         activeTakersPolicies[msg.sender].push(ActiveTakerData({provider: _providerAddr, lots: _lots, level: _level, expiry: _expiry}));
         activeProviderTakers[_providerAddr].push(msg.sender); 
+
+        emit PolicyOpened(msg.sender, _providerAddr, _expiry, _lots, _level); 
         return; 
     }
 
@@ -185,12 +194,13 @@ contract Insure{
             // Taker Wins
             balance[_taker] += activeTakersPolicies[_taker][_index].lots.mul(100 * 1e18); 
 
-            // delete activeTakersPolicies[_taker][_index]; 
+            emit PolicyClosed(_taker, activeTakersPolicies[_taker][_index].provider, _expiry,activeTakersPolicies[_taker][_index].lots, closingLevel, true);
         } else {
             // Provider Wins
             address prov = activeTakersPolicies[_taker][_index].provider;
             balance[prov] += activeTakersPolicies[_taker][_index].lots.mul(100 * 1e18);
-            // delete activeTakersPolicies[_taker][_index]; 
+
+            emit PolicyClosed(_taker, prov, _expiry,activeTakersPolicies[_taker][_index].lots, closingLevel, false);
         }
 
         // Delete the policy in activeTakersPolicies

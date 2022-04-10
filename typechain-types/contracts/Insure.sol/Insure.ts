@@ -195,55 +195,78 @@ export interface InsureInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
-    "NewPolicyAvailability(address)": EventFragment;
-    "PositionClosed(address,address,uint256,uint256,uint256,bool)": EventFragment;
-    "PositionOpened(address,address,uint256,uint256,uint256)": EventFragment;
+    "Deposit(address,uint256)": EventFragment;
+    "NewPolicy(address,uint256)": EventFragment;
+    "PolicyClosed(address,address,uint256,uint256,uint256,bool)": EventFragment;
+    "PolicyOpened(address,address,uint256,uint256,uint256)": EventFragment;
+    "Withdraw(address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "NewPolicyAvailability"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PositionClosed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "PositionOpened"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NewPolicy"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PolicyClosed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PolicyOpened"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
 }
 
-export interface NewPolicyAvailabilityEventObject {
-  provider: string;
+export interface DepositEventObject {
+  _address: string;
+  _amount: BigNumber;
 }
-export type NewPolicyAvailabilityEvent = TypedEvent<
-  [string],
-  NewPolicyAvailabilityEventObject
+export type DepositEvent = TypedEvent<[string, BigNumber], DepositEventObject>;
+
+export type DepositEventFilter = TypedEventFilter<DepositEvent>;
+
+export interface NewPolicyEventObject {
+  provider: string;
+  expiry: BigNumber;
+}
+export type NewPolicyEvent = TypedEvent<
+  [string, BigNumber],
+  NewPolicyEventObject
 >;
 
-export type NewPolicyAvailabilityEventFilter =
-  TypedEventFilter<NewPolicyAvailabilityEvent>;
+export type NewPolicyEventFilter = TypedEventFilter<NewPolicyEvent>;
 
-export interface PositionClosedEventObject {
+export interface PolicyClosedEventObject {
   taker: string;
   provider: string;
   expiry: BigNumber;
   lots: BigNumber;
-  price: BigNumber;
-  policyPaid: boolean;
+  level: BigNumber;
+  settlementPaid: boolean;
 }
-export type PositionClosedEvent = TypedEvent<
+export type PolicyClosedEvent = TypedEvent<
   [string, string, BigNumber, BigNumber, BigNumber, boolean],
-  PositionClosedEventObject
+  PolicyClosedEventObject
 >;
 
-export type PositionClosedEventFilter = TypedEventFilter<PositionClosedEvent>;
+export type PolicyClosedEventFilter = TypedEventFilter<PolicyClosedEvent>;
 
-export interface PositionOpenedEventObject {
+export interface PolicyOpenedEventObject {
   taker: string;
   provider: string;
   expiry: BigNumber;
   lots: BigNumber;
-  price: BigNumber;
+  level: BigNumber;
 }
-export type PositionOpenedEvent = TypedEvent<
+export type PolicyOpenedEvent = TypedEvent<
   [string, string, BigNumber, BigNumber, BigNumber],
-  PositionOpenedEventObject
+  PolicyOpenedEventObject
 >;
 
-export type PositionOpenedEventFilter = TypedEventFilter<PositionOpenedEvent>;
+export type PolicyOpenedEventFilter = TypedEventFilter<PolicyOpenedEvent>;
+
+export interface WithdrawEventObject {
+  _address: string;
+  _amount: BigNumber;
+}
+export type WithdrawEvent = TypedEvent<
+  [string, BigNumber],
+  WithdrawEventObject
+>;
+
+export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
 export interface Insure extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -549,44 +572,55 @@ export interface Insure extends BaseContract {
   };
 
   filters: {
-    "NewPolicyAvailability(address)"(
-      provider?: string | null
-    ): NewPolicyAvailabilityEventFilter;
-    NewPolicyAvailability(
-      provider?: string | null
-    ): NewPolicyAvailabilityEventFilter;
+    "Deposit(address,uint256)"(
+      _address?: string | null,
+      _amount?: null
+    ): DepositEventFilter;
+    Deposit(_address?: string | null, _amount?: null): DepositEventFilter;
 
-    "PositionClosed(address,address,uint256,uint256,uint256,bool)"(
-      taker?: string | null,
+    "NewPolicy(address,uint256)"(
       provider?: string | null,
-      expiry?: null,
-      lots?: null,
-      price?: null,
-      policyPaid?: null
-    ): PositionClosedEventFilter;
-    PositionClosed(
-      taker?: string | null,
-      provider?: string | null,
-      expiry?: null,
-      lots?: null,
-      price?: null,
-      policyPaid?: null
-    ): PositionClosedEventFilter;
+      expiry?: null
+    ): NewPolicyEventFilter;
+    NewPolicy(provider?: string | null, expiry?: null): NewPolicyEventFilter;
 
-    "PositionOpened(address,address,uint256,uint256,uint256)"(
+    "PolicyClosed(address,address,uint256,uint256,uint256,bool)"(
       taker?: string | null,
       provider?: string | null,
       expiry?: null,
       lots?: null,
-      price?: null
-    ): PositionOpenedEventFilter;
-    PositionOpened(
+      level?: null,
+      settlementPaid?: null
+    ): PolicyClosedEventFilter;
+    PolicyClosed(
       taker?: string | null,
       provider?: string | null,
       expiry?: null,
       lots?: null,
-      price?: null
-    ): PositionOpenedEventFilter;
+      level?: null,
+      settlementPaid?: null
+    ): PolicyClosedEventFilter;
+
+    "PolicyOpened(address,address,uint256,uint256,uint256)"(
+      taker?: string | null,
+      provider?: string | null,
+      expiry?: null,
+      lots?: null,
+      level?: null
+    ): PolicyOpenedEventFilter;
+    PolicyOpened(
+      taker?: string | null,
+      provider?: string | null,
+      expiry?: null,
+      lots?: null,
+      level?: null
+    ): PolicyOpenedEventFilter;
+
+    "Withdraw(address,uint256)"(
+      _address?: string | null,
+      _amount?: null
+    ): WithdrawEventFilter;
+    Withdraw(_address?: string | null, _amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
