@@ -162,16 +162,8 @@ describe("Insure: Close Policy: price falls, taker wins", function () {
     await insureContract.connect(addr1).checkPolicies(addr2.address);
 
     let policies = await insureContract.getActiveTakersPolicies(addr2.address);
-    let [provider, lots, level, expiry] = policies[0];
-
-    lots = parseFloat(ethers.utils.formatEther(lots));
-    level = parseFloat(ethers.utils.formatEther(level));
-    expiry = expiry.toNumber();
-
-    expect(provider).to.equal(ethers.constants.AddressZero);
-    expect(lots).to.equal(0);
-    expect(level).to.equal(0);
-    expect(expiry).to.equal(0);
+    // No taker policies left
+    expect(policies.length).to.equal(0);
   });
 
   it("Right balance provider", async function () {
@@ -194,8 +186,10 @@ describe("Insure: Close Policy: price falls, taker wins", function () {
     expect(actualBalance.toFixed(2)).to.equal(expectedBalance.toFixed(2));
   });
 
-  it("CHECK POLICIES: Ignore 0 expiry", async function () {
-    await insureContract.connect(addr1).checkPolicies(addr2.address);
+  it("CHECK POLICIES: Try closing policy again (double settlement abuse)", async function () {
+    await expect(
+      insureContract.connect(addr1).checkPolicies(addr2.address)
+    ).to.be.revertedWith("No such taker address");
   });
 
   it("Unchanged balance provider", async function () {

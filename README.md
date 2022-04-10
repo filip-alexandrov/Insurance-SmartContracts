@@ -16,6 +16,7 @@ Technical Features:
 - One Ticker per Insurance + Oracle Contract pair (with multiple expiration dates)
 - One Lot is a single policy
 - Up to 1000 lots (=$10000 max settlement value) can be provided at single Insurance Level (2 digit precision) and Expiration combination
+- Currently compatible with 18 decimal stablecoins
 
 ### TODO's for this Contract Template:
 

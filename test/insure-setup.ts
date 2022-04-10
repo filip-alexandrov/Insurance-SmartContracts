@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { Contract, ContractFactory } from "ethers";
 import { ethers } from "hardhat";
 
-describe.only("Insure: Constructor, Oracle, Withdraw, Deposit, SetProvider", function () {
+describe("Insure: Constructor, Oracle, Withdraw, Deposit, SetProvider", function () {
   let expirationTimes = [162509760078, 999999999999, 9218390];
 
   let Insure: ContractFactory;

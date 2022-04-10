@@ -170,27 +170,40 @@ contract Insure{
 
     function checkPolicies(address _address) public{
         require(activeTakersPolicies[_address].length != 0, "No such taker address");
-        for(uint256 i =0; i<activeTakersPolicies[_address].length; i++ ){
+        for(uint80 i =0; i<activeTakersPolicies[_address].length; i++ ){
             if(activeTakersPolicies[_address][i].expiry < block.timestamp && activeTakersPolicies[_address][i].expiry > 0){
-                closePolicy(_address, i, activeTakersPolicies[_address][i].expiry);
+                i = closePolicy(_address, i, activeTakersPolicies[_address][i].expiry);
             }
         }
         return; 
     }
 
-    function closePolicy(address _taker, uint256 _index, uint256 _expiry) private {
+    function closePolicy(address _taker, uint80 _index, uint256 _expiry) private returns(uint80) {
         uint256 closingLevel = customOracle(oracleAddress).getExpiryPriceLevel(_expiry);
 
         if(closingLevel < activeTakersPolicies[_taker][_index].level){
             // Taker Wins
             balance[_taker] += activeTakersPolicies[_taker][_index].lots.mul(100 * 1e18); 
-            delete activeTakersPolicies[_taker][_index]; 
+
+            // delete activeTakersPolicies[_taker][_index]; 
         } else {
             // Provider Wins
             address prov = activeTakersPolicies[_taker][_index].provider;
             balance[prov] += activeTakersPolicies[_taker][_index].lots.mul(100 * 1e18);
-            delete activeTakersPolicies[_taker][_index]; 
+            // delete activeTakersPolicies[_taker][_index]; 
         }
-        return;
+
+        // Delete the policy in activeTakersPolicies
+        if(_index < activeTakersPolicies[_taker].length - 1){
+            // Not last policy of the array => flip last and current policy, pop and iterate again
+            activeTakersPolicies[_taker][_index] = activeTakersPolicies[_taker][activeTakersPolicies[_taker].length - 1];
+            activeTakersPolicies[_taker].pop();
+
+            return _index--;
+        } else{
+            // Last element of the array => .pop() deletes the policy 
+            activeTakersPolicies[_taker].pop();
+            return _index;
+        }
     }
 }

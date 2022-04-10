@@ -3,6 +3,606 @@
   "log": [
     {
       "IERC20": {
+        "src": "contracts\\Insure.sol:39",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Insure": {
+        "src": "contracts\\Insure.sol:58",
+        "version": {
+          "withMetadata": "f3cf01dd694aea64f7c035e11ec9eb6a02baa1ad5b8428fe112dbd0a2fecbe6c",
+          "withoutMetadata": "af9d771285e2b7b2abbd56b540f26bd200198341612b3567f6f6b292c1bdf7ed",
+          "linkedWithoutMetadata": "af9d771285e2b7b2abbd56b540f26bd200198341612b3567f6f6b292c1bdf7ed"
+        },
+        "inherit": [],
+        "libraries": [
+          "PRBMathUD60x18"
+        ],
+        "methods": [
+          "(uint256[],address)",
+          "setOracle(address)",
+          "deposit(uint256)",
+          "withdraw(uint256)",
+          "getActiveTakersPolicies(address)",
+          "getActiveProviderTakers(address)",
+          "setProviderInfo(uint256,uint256,uint256,uint256)",
+          "deleteProviderPolicies(uint256[])",
+          "openPolicy(address,uint256,uint256,uint256,uint256)",
+          "checkPolicies(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Insure",
+            "src": "contracts\\Insure.sol:68"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:64"
+            },
+            {
+              "label": "usdAddress",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:65"
+            },
+            {
+              "label": "oracleAddress",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:66"
+            },
+            {
+              "label": "expiryDates",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_mapping(t_uint256,t_bool)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:67"
+            },
+            {
+              "label": "balance",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:85"
+            },
+            {
+              "label": "activeTakersPolicies",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_address,t_array(t_struct(ActiveTakerData)255_storage)dyn_storage)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:110"
+            },
+            {
+              "label": "activeProviderTakers",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:118"
+            },
+            {
+              "label": "providers",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(ProviderData)300_storage))",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:128"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(ActiveTakerData)255_storage)dyn_storage": {
+              "label": "struct Insure.ActiveTakerData[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+              "label": "mapping(address => address[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_array(t_struct(ActiveTakerData)255_storage)dyn_storage)": {
+              "label": "mapping(address => struct Insure.ActiveTakerData[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_struct(ProviderData)300_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct Insure.ProviderData))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_bool)": {
+              "label": "mapping(uint256 => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(ProviderData)300_storage)": {
+              "label": "mapping(uint256 => struct Insure.ProviderData)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(ActiveTakerData)255_storage": {
+              "label": "struct Insure.ActiveTakerData",
+              "members": [
+                {
+                  "label": "provider",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lots",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "level",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "expiry",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_struct(ProviderData)300_storage": {
+              "label": "struct Insure.ProviderData",
+              "members": [
+                {
+                  "label": "lots",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "level",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "customOracle": {
+        "src": "contracts\\Insure.sol:54",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getExpiryPriceLevel(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "PRBMath": {
+        "src": "contracts\\library\\PRBMath.sol:97",
+        "version": {
+          "withMetadata": "022c9bc5ea3b3a6193a51a5db8657b5d6deb630bf05899f6a319d4611136317c",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "PRBMathUD60x18": {
+        "src": "contracts\\library\\PRBMathUD60x18.sol:12",
+        "version": {
+          "withMetadata": "86cf94700227a4d91e50eb3936beed2aee87da83ad3e7d00f78b863840d6667e",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [
+          "PRBMath"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "console": {
+        "src": "hardhat\\console.sol:4",
+        "version": {
+          "withMetadata": "beae05454d6c24b0af2926d3f12cbd62c3db4a4f7dff423bd7ff2ddbe2972f20",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      }
+    },
+    {
+      "IERC20": {
+        "src": "contracts\\Insure.sol:39",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Insure": {
+        "src": "contracts\\Insure.sol:58",
+        "version": {
+          "withMetadata": "574c527fb2f9b2c8104500eaee681a93e8fd5c0738e4aa87e326c8f55f945e36",
+          "withoutMetadata": "365dcc731eb3b4160a6113bdd6b7d33080156947f96379c32f5fee1586c7024f",
+          "linkedWithoutMetadata": "365dcc731eb3b4160a6113bdd6b7d33080156947f96379c32f5fee1586c7024f"
+        },
+        "inherit": [],
+        "libraries": [
+          "PRBMathUD60x18"
+        ],
+        "methods": [
+          "(uint256[],address)",
+          "setOracle(address)",
+          "deposit(uint256)",
+          "withdraw(uint256)",
+          "getActiveTakersPolicies(address)",
+          "getActiveProviderTakers(address)",
+          "setProviderInfo(uint256,uint256,uint256,uint256)",
+          "deleteProviderPolicies(uint256[])",
+          "openPolicy(address,uint256,uint256,uint256,uint256)",
+          "checkPolicies(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Insure",
+            "src": "contracts\\Insure.sol:68"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:64"
+            },
+            {
+              "label": "usdAddress",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:65"
+            },
+            {
+              "label": "oracleAddress",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_address",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:66"
+            },
+            {
+              "label": "expiryDates",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_mapping(t_uint256,t_bool)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:67"
+            },
+            {
+              "label": "balance",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:85"
+            },
+            {
+              "label": "activeTakersPolicies",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_address,t_array(t_struct(ActiveTakerData)255_storage)dyn_storage)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:110"
+            },
+            {
+              "label": "activeProviderTakers",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:118"
+            },
+            {
+              "label": "providers",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(ProviderData)300_storage))",
+              "contract": "Insure",
+              "src": "contracts\\Insure.sol:128"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(ActiveTakerData)255_storage)dyn_storage": {
+              "label": "struct Insure.ActiveTakerData[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+              "label": "mapping(address => address[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_array(t_struct(ActiveTakerData)255_storage)dyn_storage)": {
+              "label": "mapping(address => struct Insure.ActiveTakerData[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_uint256,t_struct(ProviderData)300_storage))": {
+              "label": "mapping(address => mapping(uint256 => struct Insure.ProviderData))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_bool)": {
+              "label": "mapping(uint256 => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_uint256,t_struct(ProviderData)300_storage)": {
+              "label": "mapping(uint256 => struct Insure.ProviderData)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(ActiveTakerData)255_storage": {
+              "label": "struct Insure.ActiveTakerData",
+              "members": [
+                {
+                  "label": "provider",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "lots",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "level",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "expiry",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_struct(ProviderData)300_storage": {
+              "label": "struct Insure.ProviderData",
+              "members": [
+                {
+                  "label": "lots",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "level",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "customOracle": {
+        "src": "contracts\\Insure.sol:54",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getExpiryPriceLevel(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "PRBMath": {
+        "src": "contracts\\library\\PRBMath.sol:97",
+        "version": {
+          "withMetadata": "022c9bc5ea3b3a6193a51a5db8657b5d6deb630bf05899f6a319d4611136317c",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "PRBMathUD60x18": {
+        "src": "contracts\\library\\PRBMathUD60x18.sol:12",
+        "version": {
+          "withMetadata": "86cf94700227a4d91e50eb3936beed2aee87da83ad3e7d00f78b863840d6667e",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [
+          "PRBMath"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "console": {
+        "src": "hardhat\\console.sol:4",
+        "version": {
+          "withMetadata": "beae05454d6c24b0af2926d3f12cbd62c3db4a4f7dff423bd7ff2ddbe2972f20",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      }
+    },
+    {
+      "IERC20": {
         "src": "contracts\\Insure.sol:38",
         "inherit": [],
         "libraries": [],
